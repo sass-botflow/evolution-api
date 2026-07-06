@@ -1,8 +1,8 @@
 name: botflow-evolution
 
-# Only SERVER_URL, AUTHENTICATION_API_KEY, and DATABASE_CONNECTION_URI are read
-# from EasyPanel Environment (.env). All other Evolution settings are hardcoded
-# below so EasyPanel does not inject broken ${VAR} overrides (e.g. WEBHOOK_GLOBAL_ENABLED).
+# EasyPanel: paste this file as-is, then replace PASTE_YOUR_KEY_HERE and PASTE_PASSWORD.
+# Do NOT use ${VAR} syntax — EasyPanel breaks on interpolation.
+# Leave Environment tab empty (or delete all vars there).
 
 services:
   evolution-api:
@@ -13,12 +13,12 @@ services:
       evolution-redis:
         condition: service_healthy
     environment:
-      SERVER_URL: ${SERVER_URL}
+      SERVER_URL: https://evolution.api.botflow.ink
       SERVER_PORT: "8080"
-      AUTHENTICATION_API_KEY: ${AUTHENTICATION_API_KEY}
+      AUTHENTICATION_API_KEY: PASTE_YOUR_KEY_HERE
       AUTHENTICATION_EXPOSE_IN_FETCH_INSTANCES: "false"
       DATABASE_PROVIDER: postgresql
-      DATABASE_CONNECTION_URI: ${DATABASE_CONNECTION_URI}
+      DATABASE_CONNECTION_URI: postgresql://botflow:PASTE_PASSWORD@sass-botflow_postgres:5432/evolution?schema=evolution_api
       DATABASE_CONNECTION_CLIENT_NAME: botflow_evolution
       DATABASE_SAVE_DATA_INSTANCE: "true"
       CACHE_REDIS_ENABLED: "true"
