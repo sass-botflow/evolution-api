@@ -1,24 +1,30 @@
 name: botflow-evolution
 
-# EasyPanel: paste this file as-is, then replace PASTE_YOUR_KEY_HERE and PASTE_PASSWORD.
-# Do NOT use ${VAR} syntax — EasyPanel breaks on interpolation.
-# Leave Environment tab empty (or delete all vars there).
+# ═══ EASY PANEL — COPY THIS ENTIRE FILE ═══
+# Replace ONLY these 2 values before Save + Deploy:
+#   1. YOUR_API_KEY     → run: openssl rand -hex 32
+#   2. YOUR_DB_PASSWORD → same password as backend DATABASE_URL for user botflow
+#
+# Environment tab: DELETE ALL variables (leave empty)
+# Database: CREATE DATABASE evolution; (already done ✅)
 
 services:
   evolution-api:
     image: evoapicloud/evolution-api:v2.3.7
     container_name: botflow_evolution_api
     restart: unless-stopped
+    networks:
+      - sass-botflow
     depends_on:
       evolution-redis:
         condition: service_healthy
     environment:
       SERVER_URL: https://evolution.api.botflow.ink
       SERVER_PORT: "8080"
-      AUTHENTICATION_API_KEY: PASTE_YOUR_KEY_HERE
+      AUTHENTICATION_API_KEY: YOUR_API_KEY
       AUTHENTICATION_EXPOSE_IN_FETCH_INSTANCES: "false"
       DATABASE_PROVIDER: postgresql
-      DATABASE_CONNECTION_URI: postgresql://botflow:PASTE_PASSWORD@sass-botflow_postgres:5432/evolution?schema=evolution_api
+      DATABASE_CONNECTION_URI: postgresql://botflow:YOUR_DB_PASSWORD@sass-botflow_postgres:5432/evolution?schema=evolution_api
       DATABASE_CONNECTION_CLIENT_NAME: botflow_evolution
       DATABASE_SAVE_DATA_INSTANCE: "true"
       CACHE_REDIS_ENABLED: "true"
@@ -44,6 +50,8 @@ services:
     image: redis:7-alpine
     container_name: botflow_evolution_redis
     restart: unless-stopped
+    networks:
+      - sass-botflow
     command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
     volumes:
       - evolution_redis_data:/data
@@ -53,6 +61,11 @@ services:
       timeout: 5s
       retries: 10
       start_period: 10s
+
+networks:
+  sass-botflow:
+    external: true
+    name: easypanel-sass-botflow
 
 volumes:
   evolution_instances:
