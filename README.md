@@ -14,6 +14,9 @@ BotFlow WhatsApp stack — Evolution API + Redis for EasyPanel Compose.
 
 Full guide: [EASYPANEL.md](./EASYPANEL.md)
 
+> **Important:** use EasyPanel **Compose**, not **App**.  
+> If logs show `docker buildx build ... Dockerfile` → wrong service type.
+
 ## Environment (3 variables)
 
 ```env

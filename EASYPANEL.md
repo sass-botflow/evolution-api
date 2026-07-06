@@ -58,7 +58,19 @@ curl -s https://evolution.api.botflow.ink/health
 
 | Problem | Fix |
 |---------|-----|
+| **`open Dockerfile: no such file or directory`** | Service is **App** (Dockerfile build), not **Compose**. Delete it and create **Add Service → Compose**. This repo has `docker-compose.yml` only — no Dockerfile. |
 | Deploy 3 seconds | Fill Repository + Branch, ensure `docker-compose.yml` exists on `main` |
 | Orange compose warning | Remove extra env vars — keep only the 3 above |
 | `invalid interpolation format` | Delete `WEBHOOK_GLOBAL_ENABLED` etc. from Environment |
 | Memory NaN | Service not running — check Logs after deploy |
+| Build args in logs (`--build-arg SERVER_URL=...`) | Wrong service type — you are on **App**, switch to **Compose** |
+
+### Wrong vs right in EasyPanel
+
+| Wrong (your error) | Right |
+|--------------------|-------|
+| Service type: **App** | Service type: **Compose** |
+| Builds `Dockerfile` | Runs `docker-compose.yml` |
+| Name: `api-botflow-wtsp` | Name: `evolution-api` (any name OK) |
+| 20+ env vars / build args | **3 env vars** only |
+| Finishes in 3 sec with error | Takes 2–4 min, pulls `evoapicloud/evolution-api:v2.3.7` |
