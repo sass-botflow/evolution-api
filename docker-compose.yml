@@ -1,12 +1,5 @@
 name: botflow-evolution
 
-# ═══════════════════════════════════════════════════════════
-# EASY PANEL — COPY ALL → REPLACE ONLY YOUR_DB_PASSWORD
-# Environment tab: EMPTY (delete everything)
-# API KEY (copy to backend EVOLUTION_API_KEY too):
-# e323292ec09f14a66514089b993e246eb469f3a04448ddc02167447e76621f18
-# ═══════════════════════════════════════════════════════════
-
 services:
   evolution-api:
     image: evoapicloud/evolution-api:v2.3.7
@@ -21,7 +14,7 @@ services:
       AUTHENTICATION_API_KEY: e323292ec09f14a66514089b993e246eb469f3a04448ddc02167447e76621f18
       AUTHENTICATION_EXPOSE_IN_FETCH_INSTANCES: "false"
       DATABASE_PROVIDER: postgresql
-      DATABASE_CONNECTION_URI: postgresql://botflow:YOUR_DB_PASSWORD@187.124.12.89:5432/evolution?schema=evolution_api
+      DATABASE_CONNECTION_URI: postgresql://botflow:botflow@187.124.12.89:5432/evolution?schema=evolution_api
       DATABASE_CONNECTION_CLIENT_NAME: botflow_evolution
       DATABASE_SAVE_DATA_INSTANCE: "true"
       CACHE_REDIS_ENABLED: "true"
